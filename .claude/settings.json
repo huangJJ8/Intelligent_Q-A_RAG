@@ -1,0 +1,76 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(npx vitest *)",
+      "Bash(npx vite *)",
+      "Bash(npx tsc *)",
+      "Bash(python *)",
+      "Bash(pip install *)",
+      "Bash(venv/Scripts/*)",
+      "Bash(*uvicorn*)",
+      "Bash(*pytest*)",
+      "Bash(mkdir -p *)",
+      "Bash(rm -f *)",
+      "Bash(rm -rf *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(echo *)",
+      "Bash(git config *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git log *)",
+      "Bash(git checkout *)",
+      "Bash(git merge *)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git branch *)",
+      "Bash(source venv/Scripts/activate *)",
+      "Bash(*start.bat*)",
+      "Bash(*start.py*)",
+      "Bash(cd *)",
+      "Bash(curl *)",
+      "Bash(*pip install -r requirements.txt*)",
+      "Bash(*npm audit*)",
+      "Bash(*grep*)",
+      "Bash(*mkdir*)",
+      "Bash(*cat .claude/results/*)",
+      "Bash(xargs cat)",
+      "Write(.claude/results/**)",
+      "Read(//*/.claude/**)",
+      "Read(//*/backend/**)",
+      "Read(//*/frontend/**)",
+      "Bash(git init *)"
+    ],
+    "additionalDirectories": [
+      "d:/LangChainRAG项目/.claude",
+      "d:/LangChainRAG项目/.claude/results",
+      "d:/LangChainRAG项目/.claude/scripts",
+      "d:/LangChainRAG项目/.claude/skills",
+      "d:/LangChainRAG项目/.claude/agents",
+      "d:/LangChainRAG项目/backend",
+      "d:/LangChainRAG项目/backend/data",
+      "d:/LangChainRAG项目/backend/data/uploads",
+      "d:/LangChainRAG项目/backend/data/chromadb",
+      "d:/LangChainRAG项目/frontend"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "agent",
+            "prompt": "You are a git commit quality gate. Use Read tool to check two files: .claude/results/tester-result.txt and .claude/results/quality-result.txt. If BOTH files exist AND BOTH first lines are exactly 'PASS': return {\"hookSpecificOutput\": {\"permissionDecision\": \"allow\"}, \"systemMessage\": \"Quality gate PASS - commit allowed\"}. Otherwise: return {\"hookSpecificOutput\": {\"permissionDecision\": \"deny\"}, \"systemMessage\": \"Quality gate BLOCKED - run gitcommit-agent first to generate pass markers at .claude/results/\"}. You MUST actually read the files with Read tool before deciding.",
+            "if": "Bash(*git commit*)",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

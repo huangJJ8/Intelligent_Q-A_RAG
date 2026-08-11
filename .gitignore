@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+venv/
+*.egg-info/
+dist/
+build/
+*.db
+
+# Frontend
+node_modules/
+frontend/dist/
+
+# Runtime data
+backend/data/
+!backend/data/.gitkeep
+data/
+
+# Environment
+.env
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+.DS_Store
+Desktop.ini
+
+# Claude Code local state
+.claude/results/
